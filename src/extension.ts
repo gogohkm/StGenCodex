@@ -11,97 +11,114 @@ import { GovernanceViewProvider } from "./views/governanceView";
 import { MemoryViewProvider } from "./views/memoryView";
 
 export function activate(context: vscode.ExtensionContext) {
-  registerStructMcpProvider(context);
-  registerStructChatParticipant(context);
-
+  console.log("StructAI activate: start");
   context.subscriptions.push(
-    vscode.window.registerWebviewViewProvider("structai.mapping", new MappingViewProvider(context))
+    vscode.window.registerWebviewViewProvider("structai-mapping", new MappingViewProvider(context))
   );
+  console.log("StructAI activate: mapping view registered");
 
   context.subscriptions.push(
-    vscode.window.registerWebviewViewProvider("structai.results", new ResultsViewProvider(context), {
+    vscode.window.registerWebviewViewProvider("structai-results", new ResultsViewProvider(context), {
       webviewOptions: { retainContextWhenHidden: true }
     })
   );
+  console.log("StructAI activate: results view registered");
 
   context.subscriptions.push(
-    vscode.window.registerWebviewViewProvider("structai.resolve", new ResolveViewProvider(context), {
+    vscode.window.registerWebviewViewProvider("structai-resolve", new ResolveViewProvider(context), {
       webviewOptions: { retainContextWhenHidden: true }
     })
   );
+  console.log("StructAI activate: resolve view registered");
 
   context.subscriptions.push(
-    vscode.window.registerWebviewViewProvider("structai.qa", new QaViewProvider(context), {
+    vscode.window.registerWebviewViewProvider("structai-qa", new QaViewProvider(context), {
       webviewOptions: { retainContextWhenHidden: true }
     })
   );
+  console.log("StructAI activate: qa view registered");
 
   context.subscriptions.push(
-    vscode.window.registerWebviewViewProvider("structai.projects", new ProjectsViewProvider(context), {
+    vscode.window.registerWebviewViewProvider("structai-projects", new ProjectsViewProvider(context), {
       webviewOptions: { retainContextWhenHidden: true }
     })
   );
+  console.log("StructAI activate: projects view registered");
 
   context.subscriptions.push(
-    vscode.window.registerWebviewViewProvider("structai.governance", new GovernanceViewProvider(context), {
+    vscode.window.registerWebviewViewProvider("structai-governance", new GovernanceViewProvider(context), {
       webviewOptions: { retainContextWhenHidden: true }
     })
   );
+  console.log("StructAI activate: governance view registered");
 
   context.subscriptions.push(
-    vscode.window.registerWebviewViewProvider("structai.memory", new MemoryViewProvider(context))
+    vscode.window.registerWebviewViewProvider("structai-memory", new MemoryViewProvider(context))
   );
+  console.log("StructAI activate: memory view registered");
+
+  try {
+    registerStructChatParticipant(context);
+  } catch (err) {
+    console.error("StructAI chat participant registration failed", err);
+  }
+
+  try {
+    registerStructMcpProvider(context);
+  } catch (err) {
+    console.error("StructAI MCP provider registration failed", err);
+  }
 
   const focusView = async (viewId: string) => {
-    await vscode.commands.executeCommand("workbench.view.extension.structai.panel");
+    await vscode.commands.executeCommand("workbench.view.extension.structai-panel");
     await vscode.commands.executeCommand(`${viewId}.focus`);
   };
 
   context.subscriptions.push(
     vscode.commands.registerCommand("structai.openPanel", async () => {
-      await vscode.commands.executeCommand("workbench.view.extension.structai.panel");
+      await vscode.commands.executeCommand("workbench.view.extension.structai-panel");
     })
   );
 
   context.subscriptions.push(
     vscode.commands.registerCommand("structai.openMapping", async () => {
-      await focusView("structai.mapping");
+      await focusView("structai-mapping");
     })
   );
 
   context.subscriptions.push(
     vscode.commands.registerCommand("structai.openResults", async () => {
-      await focusView("structai.results");
+      await focusView("structai-results");
     })
   );
 
   context.subscriptions.push(
     vscode.commands.registerCommand("structai.openResolve", async () => {
-      await focusView("structai.resolve");
+      await focusView("structai-resolve");
     })
   );
 
   context.subscriptions.push(
     vscode.commands.registerCommand("structai.openQa", async () => {
-      await focusView("structai.qa");
+      await focusView("structai-qa");
     })
   );
 
   context.subscriptions.push(
     vscode.commands.registerCommand("structai.openProjects", async () => {
-      await focusView("structai.projects");
+      await focusView("structai-projects");
     })
   );
 
   context.subscriptions.push(
     vscode.commands.registerCommand("structai.openGovernance", async () => {
-      await focusView("structai.governance");
+      await focusView("structai-governance");
     })
   );
 
   context.subscriptions.push(
     vscode.commands.registerCommand("structai.openMemory", async () => {
-      await focusView("structai.memory");
+      await focusView("structai-memory");
     })
   );
 }

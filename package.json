@@ -12,19 +12,19 @@
   "main": "./out/extension.js",
   "activationEvents": [
     "onStartupFinished",
-    "onChatParticipant:structai.struct",
-    "onView:structai.mapping",
-    "onView:structai.results",
-    "onView:structai.resolve",
-    "onView:structai.qa",
-    "onView:structai.projects",
-    "onView:structai.governance",
-    "onView:structai.memory"
+    "onChatParticipant:structai-struct",
+    "onView:structai-mapping",
+    "onView:structai-results",
+    "onView:structai-resolve",
+    "onView:structai-qa",
+    "onView:structai-projects",
+    "onView:structai-governance",
+    "onView:structai-memory"
   ],
   "contributes": {
     "chatParticipants": [
       {
-        "id": "structai.struct",
+        "id": "structai-struct",
         "name": "struct",
         "fullName": "StructAI",
         "description": "Structural engineering assistant for CAD/FEA/docs with traceable checks.",
@@ -100,41 +100,48 @@
     "viewsContainers": {
       "panel": [
         {
-          "id": "structai.panel",
+          "id": "structai-panel",
           "title": "StructAI",
           "icon": "media/icons/structai.svg"
         }
       ]
     },
     "views": {
-      "structai.panel": [
+      "structai-panel": [
         {
-          "id": "structai.mapping",
-          "name": "Mapping"
+          "id": "structai-mapping",
+          "name": "Mapping",
+          "type": "webview"
         },
         {
-          "id": "structai.results",
-          "name": "Results"
+          "id": "structai-results",
+          "name": "Results",
+          "type": "webview"
         },
         {
-          "id": "structai.resolve",
-          "name": "Resolve"
+          "id": "structai-resolve",
+          "name": "Resolve",
+          "type": "webview"
         },
         {
-          "id": "structai.qa",
-          "name": "QA"
+          "id": "structai-qa",
+          "name": "QA",
+          "type": "webview"
         },
         {
-          "id": "structai.projects",
-          "name": "Projects"
+          "id": "structai-projects",
+          "name": "Projects",
+          "type": "webview"
         },
         {
-          "id": "structai.governance",
-          "name": "Governance"
+          "id": "structai-governance",
+          "name": "Governance",
+          "type": "webview"
         },
         {
-          "id": "structai.memory",
-          "name": "Memory"
+          "id": "structai-memory",
+          "name": "Memory",
+          "type": "webview"
         }
       ]
     },

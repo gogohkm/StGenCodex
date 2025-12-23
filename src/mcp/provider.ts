@@ -2,6 +2,11 @@ import * as path from "path";
 import * as vscode from "vscode";
 
 export function registerStructMcpProvider(context: vscode.ExtensionContext) {
+  const lm = (vscode as any).lm;
+  if (!lm || typeof lm.registerMcpServerDefinitionProvider !== "function") {
+    return;
+  }
+
   const didChange = new vscode.EventEmitter<void>();
 
   const provider: any = {
@@ -22,14 +27,14 @@ export function registerStructMcpProvider(context: vscode.ExtensionContext) {
         STRUCTAI_DB: dbPath
       };
 
-      const def = new (vscode as any).McpStdioServerDefinition({
-        label: "StructAI Local MCP",
-        command: pythonPath,
-        args: ["-u", serverScript.fsPath],
-        cwd,
+      const def = new (vscode as any).McpStdioServerDefinition(
+        "StructAI Local MCP",
+        pythonPath,
+        ["-u", serverScript.fsPath],
         env,
-        version: "0.1.4"
-      });
+        "0.1.4"
+      );
+      def.cwd = cwd;
 
       return [def];
     },
@@ -38,6 +43,6 @@ export function registerStructMcpProvider(context: vscode.ExtensionContext) {
     }
   };
 
-  context.subscriptions.push(vscode.lm.registerMcpServerDefinitionProvider("structaiMcpProvider", provider));
+  context.subscriptions.push(lm.registerMcpServerDefinitionProvider("structaiMcpProvider", provider));
   context.subscriptions.push(didChange);
 }

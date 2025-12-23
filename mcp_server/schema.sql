@@ -418,7 +418,7 @@ CREATE TABLE IF NOT EXISTS benchmark_results (
   status TEXT,
   meta_json TEXT NOT NULL DEFAULT '{}',
   created_at TEXT NOT NULL DEFAULT (datetime('now')),
-  UNIQUE(benchmark_id, member_uid, COALESCE(story_norm,''), check_type, combo)
+  UNIQUE(benchmark_id, member_uid, story_norm, check_type, combo)
 );
 
 CREATE INDEX IF NOT EXISTS idx_benchmark_results_lookup

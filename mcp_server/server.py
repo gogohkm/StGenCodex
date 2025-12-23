@@ -43,7 +43,11 @@ DB_PATH = Path(os.environ.get("STRUCTAI_DB", str(ROOT / "structai.sqlite")))
 SCHEMA_PATH = Path(__file__).with_name("schema.sql")
 DB_PATH_OVERRIDE: Optional[Path] = None
 
-mcp = FastMCP("structai-mcp", version="0.1.4")
+try:
+    mcp = FastMCP("structai-mcp", version="0.1.4")
+except TypeError:
+    # Older MCP SDKs do not accept a version kwarg.
+    mcp = FastMCP("structai-mcp")
 
 _VAR_RX = re.compile(r"\$\{([A-Za-z0-9_]+)\}")
 
@@ -1092,9 +1096,18 @@ def structai_map_suggest_members(
     cad_artifact_id: int,
     model_id: int,
     limit: int = 500,
+    max_tokens: Optional[int] = None,
+    max_candidates_per_token: Optional[int] = None,
+    spatial_tolerance: Optional[float] = None,
+    enable_fuzzy: bool = True,
 ) -> Dict[str, Any]:
     conn = _connect()
     try:
+        if max_tokens is not None:
+            try:
+                limit = min(int(limit), int(max_tokens))
+            except Exception:
+                pass
         # load model members
         rows = conn.execute(
             "SELECT model_member_id, member_uid, member_label, label_norm FROM model_members WHERE model_id=?",

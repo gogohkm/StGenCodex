@@ -37,7 +37,11 @@ exports.invokeStructAi = invokeStructAi;
 exports.unwrapToolResult = unwrapToolResult;
 const vscode = __importStar(require("vscode"));
 async function invokeStructAi(toolSuffix, input) {
-    const toolInfo = vscode.lm.tools.find((t) => {
+    const lm = vscode.lm;
+    if (!lm || !Array.isArray(lm.tools) || typeof lm.invokeTool !== "function") {
+        throw new Error("Language model tools are not available in this VS Code build.");
+    }
+    const toolInfo = lm.tools.find((t) => {
         const name = t.name;
         return Boolean(name && name.includes(toolSuffix));
     });
@@ -46,7 +50,7 @@ async function invokeStructAi(toolSuffix, input) {
             `Tip: open a StructAI chat once so MCP tool discovery completes.`);
     }
     const cts = new vscode.CancellationTokenSource();
-    const result = await vscode.lm.invokeTool(toolInfo.name, {
+    const result = await lm.invokeTool(toolInfo.name, {
         input,
         toolInvocationToken: cts.token
     });

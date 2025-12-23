@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 import * as chatUtils from "@vscode/chat-extension-utils";
 
-const PARTICIPANT_ID = "structai.struct";
+const PARTICIPANT_ID = "structai-struct";
 
 export function registerStructChatParticipant(context: vscode.ExtensionContext) {
   const handler: vscode.ChatRequestHandler = async (

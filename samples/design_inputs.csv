@@ -1,0 +1,3 @@
+member_uid,Mn_pos,Mn_neg,Vn,Pn,D_allow,drift_allow
+B1,200,180,80,500,0.03,0.01
+C1,150,140,60,800,0.02,0.01

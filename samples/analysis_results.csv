@@ -1,0 +1,3 @@
+member_uid,combo,M3_max,M3_min,V2_max,N_max,D_max,drift_max
+B1,LC1,120,-80,40,100,0.02,0.005
+C1,LC1,60,-30,20,300,0.01,0.002

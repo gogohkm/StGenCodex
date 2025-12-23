@@ -1,7 +1,12 @@
 import * as vscode from "vscode";
 
 export async function invokeStructAi(toolSuffix: string, input: any): Promise<any> {
-  const toolInfo = vscode.lm.tools.find((t) => {
+  const lm = (vscode as any).lm;
+  if (!lm || !Array.isArray(lm.tools) || typeof lm.invokeTool !== "function") {
+    throw new Error("Language model tools are not available in this VS Code build.");
+  }
+
+  const toolInfo = lm.tools.find((t: any) => {
     const name = (t as any).name as string | undefined;
     return Boolean(name && name.includes(toolSuffix));
   });
@@ -14,7 +19,7 @@ export async function invokeStructAi(toolSuffix: string, input: any): Promise<an
   }
 
   const cts = new vscode.CancellationTokenSource();
-  const result: any = await (vscode.lm as any).invokeTool((toolInfo as any).name, {
+  const result: any = await lm.invokeTool((toolInfo as any).name, {
     input,
     toolInvocationToken: cts.token
   });

@@ -36,7 +36,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.registerStructChatParticipant = registerStructChatParticipant;
 const vscode = __importStar(require("vscode"));
 const chatUtils = __importStar(require("@vscode/chat-extension-utils"));
-const PARTICIPANT_ID = "structai.struct";
+const PARTICIPANT_ID = "structai-struct";
 function registerStructChatParticipant(context) {
     const handler = async (request, chatContext, stream, token) => {
         if (request.command === "map") {
