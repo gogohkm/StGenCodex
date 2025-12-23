@@ -1,0 +1,60 @@
+body {
+  font-family: var(--vscode-font-family);
+  color: var(--vscode-foreground);
+  background: var(--vscode-sideBar-background);
+  padding: 10px;
+}
+
+.row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 6px 0;
+}
+
+.section {
+  margin-top: 12px;
+  padding-top: 8px;
+  border-top: 1px solid var(--vscode-sideBar-border, rgba(255,255,255,0.08));
+}
+
+button, select, input {
+  background: var(--vscode-button-background);
+  color: var(--vscode-button-foreground);
+  border: 1px solid var(--vscode-button-border, transparent);
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+select, input[type="number"], input[type="text"] {
+  background: var(--vscode-input-background);
+  color: var(--vscode-input-foreground);
+  border: 1px solid var(--vscode-input-border);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 6px;
+  font-size: 12px;
+}
+
+.table th, .table td {
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  padding: 6px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.detail {
+  white-space: pre-wrap;
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 6px;
+  border-radius: 6px;
+  background: rgba(0,0,0,0.1);
+}
+
+.muted {
+  opacity: 0.8;
+}

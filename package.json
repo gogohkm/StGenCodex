@@ -1,0 +1,182 @@
+{
+  "name": "structai",
+  "displayName": "StructAI (Structural Engineering Assistant)",
+  "description": "VS Code-integrated structural engineering AI: CAD/PDF/MD/FEA context, unified memory, and code-based safety checks via MCP.",
+  "version": "0.1.0",
+  "publisher": "local",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.107.0"
+  },
+  "categories": ["Other"],
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "onStartupFinished",
+    "onChatParticipant:structai.struct",
+    "onView:structai.mapping",
+    "onView:structai.results",
+    "onView:structai.resolve",
+    "onView:structai.qa",
+    "onView:structai.projects",
+    "onView:structai.governance",
+    "onView:structai.memory"
+  ],
+  "contributes": {
+    "chatParticipants": [
+      {
+        "id": "structai.struct",
+        "name": "struct",
+        "fullName": "StructAI",
+        "description": "Structural engineering assistant for CAD/FEA/docs with traceable checks.",
+        "commands": [
+          {
+            "name": "import",
+            "description": "Import CAD/PDF/MD/model files into project memory."
+          },
+          {
+            "name": "map",
+            "description": "Open mapping view (CAD \u2194 model)."
+          },
+          {
+            "name": "check",
+            "description": "Run or inspect structural checks."
+          },
+          {
+            "name": "report",
+            "description": "Generate or summarize reports."
+          },
+          {
+            "name": "reset",
+            "description": "Reset project memory (requires tool approval)."
+          }
+        ],
+        "disambiguation": [
+          {
+            "category": "structural_engineering",
+            "description": "Questions that require drawings, analysis results, and code citations.",
+            "examples": [
+              "Check beam B12 for ULS and cite KDS clauses.",
+              "Map CAD labels to analysis model members.",
+              "Summarize demand/capacity ratios for this model."
+            ]
+          }
+        ]
+      }
+    ],
+    "commands": [
+      {
+        "command": "structai.openPanel",
+        "title": "StructAI: Open Panel"
+      },
+      {
+        "command": "structai.openMapping",
+        "title": "StructAI: Open Mapping View"
+      },
+      {
+        "command": "structai.openResults",
+        "title": "StructAI: Open Results View"
+      },
+      {
+        "command": "structai.openResolve",
+        "title": "StructAI: Open Resolve View"
+      },
+      {
+        "command": "structai.openQa",
+        "title": "StructAI: Open QA View"
+      },
+      {
+        "command": "structai.openProjects",
+        "title": "StructAI: Open Projects View"
+      },
+      {
+        "command": "structai.openGovernance",
+        "title": "StructAI: Open Governance View"
+      },
+      {
+        "command": "structai.openMemory",
+        "title": "StructAI: Open Memory View"
+      }
+    ],
+    "viewsContainers": {
+      "panel": [
+        {
+          "id": "structai.panel",
+          "title": "StructAI",
+          "icon": "media/icons/structai.svg"
+        }
+      ]
+    },
+    "views": {
+      "structai.panel": [
+        {
+          "id": "structai.mapping",
+          "name": "Mapping"
+        },
+        {
+          "id": "structai.results",
+          "name": "Results"
+        },
+        {
+          "id": "structai.resolve",
+          "name": "Resolve"
+        },
+        {
+          "id": "structai.qa",
+          "name": "QA"
+        },
+        {
+          "id": "structai.projects",
+          "name": "Projects"
+        },
+        {
+          "id": "structai.governance",
+          "name": "Governance"
+        },
+        {
+          "id": "structai.memory",
+          "name": "Memory"
+        }
+      ]
+    },
+    "mcpServerDefinitionProviders": [
+      {
+        "id": "structaiMcpProvider",
+        "label": "StructAI MCP Provider"
+      }
+    ],
+    "configuration": {
+      "title": "StructAI",
+      "properties": {
+        "structai.pythonPath": {
+          "type": "string",
+          "default": "python",
+          "description": "Python executable used to run the StructAI MCP server."
+        },
+        "structai.dbPath": {
+          "type": "string",
+          "default": "",
+          "description": "Optional StructAI SQLite DB path. Defaults to workspace .structai/structai.sqlite."
+        },
+        "structai.autoStartMcp": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically provide MCP server definition when views/participant are used."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "echo \"(lint placeholder)\"",
+    "package": "vsce package"
+  },
+  "dependencies": {
+    "@vscode/chat-extension-utils": "0.0.0-alpha.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.107.0",
+    "typescript": "^5.5.0"
+  }
+}
